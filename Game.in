@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Late Night In - Interactive Romance</title>
+    <style>
+        body {
+            background-color: #0c0c10;
+            color: #f1f1f6;
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #game-container {
+            width: 720px;
+            background: #16161f;
+            border: 1px solid #282838;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.85);
+        }
+        #scene-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff3366;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        #story-text {
+            font-size: 18px;
+            line-height: 1.75;
+            min-height: 150px;
+            margin-bottom: 35px;
+        }
+        .choice-btn {
+            display: block;
+            width: 100%;
+            background: #1f1f2e;
+            color: #fff;
+            border: 1px solid #3c3c55;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: 'Segoe UI', sans-serif;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+        .choice-btn:hover {
+            background: #ff3366;
+            border-color: #ff3366;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <div id="scene-title">Chapter 1: Quiet Evening</div>
+        <div id="story-text">Loading story...</div>
+        <div id="choices-container"></div>
+    </div>
+
+    <script>
+        // Story Data: A romantic and intimate evening with a girlfriend
+        const storyData = {
+            start: {
+                title: "Chapter 1: Quiet Evening",
+                text: "The apartment is warm and quiet, lit only by the soft glow of the living room lamp. Maya is sitting on the edge of the couch, wearing an oversized sweater, looking up as you walk into the room. A gentle smile spreads across her face. 'You're finally home,' she murmurs, patting the cushion beside her.",
+                choices: [
+                    { text: "Sit right beside her, pull her close, and kiss her.", next: "couch_kiss" },
+                    { text: "Smile, wrap your arms around her from behind, and whisper in her ear.", next: "behind_embrace" }
+                ]
+            },
+            couch_kiss: {
+                title: "Close to You",
+                text: "You sit down, immediately pulling her into your arms. Your lips meet in a slow, deep kiss that lingers. Maya sighs softly against your mouth, her hands sliding up to rest behind your neck, her fingers tangling in your hair. The tension in the room shifts, turning electric.",
+                choices: [
+                    { text: "Lift her gently and carry her toward the bedroom.", next: "bedroom_transition" },
+                    { text: "Keep kissing her right there on the couch.", next: "couch_escalation" }
+                ]
+            },
+            behind_embrace: {
+                title: "A Gentle Surprise",
+                text: "You step behind the couch, wrapping your arms securely around her waist and pressing a warm kiss to the side of her neck. Maya shivers slightly, leaning her head back against your chest with a soft laugh. 'You always know how to distract me,' she whispers, turning around in your arms to face you.",
+                choices: [
+                    { text: "Look into her eyes and pull her in for a passionate kiss.", next: "bedroom_transition" }
+                ]
+            },
+            couch_escalation: {
+                title: "The Living Room",
+                text: "You deepen the kiss, pressing her gently back against the cushions. The outside world completely disappears. Every touch is eager and heated as clothes are shed, the space filling with heavy breathing and close physical warmth...",
+                choices: [
+                    { text: "Let go completely and lean into the intensity.", next: "adult_scene_main" }
+                ]
+            },
+            bedroom_transition: {
+                title: "The Bedroom",
+                text: "You guide her down the hallway into the quiet darkness of the bedroom. The moonlight streams softly through the window across the sheets. Maya pulls you down onto the bed with her, her eyes dark with desire. 'I've been thinking about you all day,' she breathes out.",
+                choices: [
+                    { text: "Kiss her deeply and begin making love.", next: "adult_scene_main" }
+                ]
+            },
+            adult_scene_main: {
+                title: "Intimate Connection",
+                text: "Skin meets skin as all boundaries fade away. Every touch is slow, deliberate, and deeply passionate, building an intense rhythm between the two of you. Whispered words of affection mix with breathless sighs in the quiet room as the intensity climbs higher and higher...",
+                choices: [
+                    { text: "Hold her tighter as the passion reaches its climax.", next: "climax_scene" }
+                ]
+            },
+            climax_scene: {
+                title: "Aftermath",
+                text: "A shattering wave of warmth overtakes you both, leaving you breathless and completely intertwined. Afterward, lying side by side under the covers in the peaceful silence, Maya rests her head contentedly against your chest, her hand tracing circles on your skin.",
+                choices: [
+                    { text: "Play Again / Restart", next: "start" }
+                ]
+            }
+        };
+
+        function loadScene(sceneKey) {
+            const scene = storyData[sceneKey];
+            if (!scene) return;
+
+            document.getElementById("scene-title").innerText = scene.title;
+            document.getElementById("story-text").innerText = scene.text;
+
+            const choicesContainer = document.getElementById("choices-container");
+            choicesContainer.innerHTML = "";
+
+            scene.choices.forEach(choice => {
+                const btn = document.createElement("button");
+                btn.className = "choice-btn";
+                btn.innerText = choice.text;
+                btn.onclick = () => loadScene(choice.next);
+                choicesContainer.appendChild(btn);
+            });
+        }
+
+        // Initialize game on load
+        loadScene("start");
+    </script>
+</body>
+</html>
